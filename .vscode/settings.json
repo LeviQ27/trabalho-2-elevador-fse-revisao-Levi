@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "bmp280.h": "c",
+        "wiringpi.h": "c",
+        "uart.h": "c",
+        "pthread.h": "c",
+        "wiringpii2c.h": "c",
+        "lcdcontrole.h": "c",
+        "bmp280_defs.h": "c",
+        "fila.h": "c",
+        "eventos.h": "c",
+        "calibrasensores.h": "c",
+        "i2c.h": "c",
+        "controlemotor.h": "c",
+        "elevadorcontrole.h": "c",
+        "lcd128x64.h": "c",
+        "ssd1306_graphics.h": "c",
+        "unistd.h": "c"
+    }
+}
