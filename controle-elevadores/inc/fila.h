@@ -1,4 +1,4 @@
-#ifndef FILA_H // verifica se a FILA_H foi definida. Se não foi, roda o resto do código
+#ifndef FILA_H 
 #define FILA_H
 
 #define MAX_SIZE 11

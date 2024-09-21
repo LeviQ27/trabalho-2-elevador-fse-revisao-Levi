@@ -1,0 +1,53 @@
+BINFOLDER := bin/
+INCFOLDER := inc/
+SRCFOLDER := src/
+OBJFOLDER := obj/
+
+CC := gcc
+CFLAGS := -std=c99 -w
+LINKFLAGS := -lwiringPi -lpthread -lm
+
+# Fontes para o elevadorControle
+SRC_ELEVADOR1 := $(wildcard src/elevadorControle/*.c)
+OBJ_ELEVADOR1 := $(SRC_ELEVADOR1:src/elevadorControle/%.c=obj/elevadorControle/%.o)
+
+# Fontes para o elevadorControleE2
+SRC_ELEVADOR2 := $(wildcard src/elevadorControleE2/*.c)
+OBJ_ELEVADOR2 := $(SRC_ELEVADOR2:src/elevadorControleE2/%.c=obj/elevadorControleE2/%.o)
+
+# Compilar ambos os executáveis
+all: elevadorControle elevadorControleE2
+
+# Regras para o primeiro executável
+elevadorControle: $(OBJ_ELEVADOR1)
+	$(CC) $(CFLAGS) $(OBJ_ELEVADOR1) -o $(BINFOLDER)elevadorControle $(LINKFLAGS)
+
+# Regras para o segundo executável
+elevadorControleE2: $(OBJ_ELEVADOR2)
+	$(CC) $(CFLAGS) $(OBJ_ELEVADOR2) -o $(BINFOLDER)elevadorControleE2 $(LINKFLAGS)
+
+# Compilar arquivos objetos para elevadorControle
+obj/elevadorControle/%.o: src/elevadorControle/%.c
+	mkdir -p obj/elevadorControle
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INCFOLDER)
+
+# Compilar arquivos objetos para elevadorControleE2
+obj/elevadorControleE2/%.o: src/elevadorControleE2/%.c
+	mkdir -p obj/elevadorControleE2
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INCFOLDER)
+
+# Regra para rodar o primeiro executável
+run1: $(BINFOLDER)elevadorControle
+	$(BINFOLDER)elevadorControle
+
+# Regra para rodar o segundo executável
+run2: $(BINFOLDER)elevadorControleE2
+	$(BINFOLDER)elevadorControleE2
+
+# Limpeza dos arquivos objetos e binários
+.PHONY: clean
+clean:
+	rm -rf obj/elevadorControle obj/elevadorControleE2
+	rm -rf bin/elevadorControle bin/elevadorControleE2
+	touch obj/.gitkeep
+	touch bin/.gitkeep

@@ -54,36 +54,26 @@ void *oled(void *arg)
 }
 
 int main(){
-    
-    //calibraSensorAndar(1);
-    //calibraSensorAndar(2);
-    
-    
-    if (wiringPiSetup () == -1){
-        return 1 ;
+
+    if (wiringPiSetup() == -1)
+    {
+        return 1;
     }
-    if (uartIniciar() == -1) {
-        return -1; 
+    if (uartIniciar() == -1)
+    {
+        return -1;
     }
 
     fila_1 = criaFila();
     fila_2 = criaFila();
-   
 
-    filaUnica(fila_1, 0);
-    filaUnica(fila_2, 0);
-    pthread_t threadBotoes, threadEncoder, threadOLED, threadPWM;
-
-    pinosConfigura();
-
-    pthread_create(&threadBotoes, NULL, lerBotoesThread, NULL);
-    pthread_create(&threadEncoder, NULL, lerEncoderThread, NULL);
-    pthread_create(&threadOLED, NULL, oled, NULL);
-    pthread_create(&threadPWM, NULL, escreverPWMThread, NULL);
-
-    delay(300);
-
+    //calibraSensorAndar(1);
+    //calibraSensorAndar(2);
     motorControle();
+    
+    //pthread_t threadOLED;
+    //pthread_create(&threadOLED, NULL, oled, NULL);
+
 
     return 0;
 }
@@ -103,12 +93,14 @@ bool SetupTest()
     }
 
     // Turn on I2C bus (optionally it may already be on)
+    /*
     if (!myOLED.OLED_I2C_ON())
     {
         printf("Error 1202: bcm2835_i2c_begin :Cannot start I2C, Running as root?\n");
         bcm2835_close(); // Close the library
         return false;
     }
+    */
 
     printf("SSD1306 library Version Number :: %u\r\n", myOLED.getLibVerNum());
     printf("bcm2835 library Version Number :: %u\r\n", bcm2835_version());

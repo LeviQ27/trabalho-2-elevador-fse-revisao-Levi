@@ -4,7 +4,7 @@
 
 
 Fila* criaFila() {
-    Fila* fila = (Fila*)malloc(sizeof(Fila));
+    Fila* fila = (Fila*)malloc(sizeof(Fila)*10);
     if (fila == NULL){
         fprintf(stderr, "Erro ao alocar memória para a fila!\n");
         exit(EXIT_FAILURE);

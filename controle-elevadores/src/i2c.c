@@ -18,7 +18,9 @@ sensors_t sensor_data_e2;
 float enviaOledTemperatura_e1()
 {    
     bmp280_init();
+    delay(50);
     i2c_address_t verificaSensor = bmp280_check_connected_address();
+    delay(50);
     if (verificaSensor != BOTH_DETECTED)
         if(verificaSensor == I2C_ADDRESS_1)
         {
@@ -34,14 +36,16 @@ float enviaOledTemperatura_e1()
         }
     
     sensor_data_e1.temperature = bmp280_get_temperature(BMP280_ADDR1);
-
+    delay(50);
     return (float) sensor_data_e1.temperature;
 }
 
 float enviaOledTemperatura_e2()
 {
     bmp280_init();
+    delay(50);
     i2c_address_t verificaSensor = bmp280_check_connected_address();
+    delay(50);
     if (verificaSensor != BOTH_DETECTED)
         if (verificaSensor == I2C_ADDRESS_1)
         {
@@ -56,7 +60,8 @@ float enviaOledTemperatura_e2()
             printf("Nenhum dos sensores estão funcionando!");
         }
 
-    sensor_data_e1.temperature = bmp280_get_temperature(BMP280_ADDR1);
+    sensor_data_e2.temperature = bmp280_get_temperature(BMP280_ADDR1);
+    delay(50);
 
-    return (float)sensor_data_e1.temperature;
+    return (float)sensor_data_e2.temperature;
 }

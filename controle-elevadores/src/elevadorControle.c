@@ -29,7 +29,9 @@
 #define POTM_E2 13
 
 
-pthread_mutex_t uartMutex = PTHREAD_MUTEX_INITIALIZER;
+//pthread_mutex_t uartMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t uartMutex_e1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t uartMutex_e2 = PTHREAD_MUTEX_INITIALIZER;
 
 Fila* fila_1;
 Fila* fila_2;
@@ -68,6 +70,8 @@ void* lerEncoderThread(void* arg) {
             posicaoElevador1 = posicao;
         }
 
+        usleep(150000);
+
         posicao = captaEncoder_e2();
         if(posicao >= 0 && posicao <= 25500){
             posicaoElevador2 = posicao;
@@ -87,6 +91,8 @@ void* escreverPWMThread(void* arg) {
         }else{
            pwmEnviar_e1(sinalPWM_1);
         }
+
+        delay(1500);
 
         if (sinalPWM_2 < 0)
         {
@@ -122,7 +128,7 @@ void motorMovimento_e1(int referencia){
     pidAtualizaReferencia((double) referencia );
     if (referencia > posicaoElevador1)
         {
-            strcpy(estado_e1, "Elevador subindo");
+            strcpy(estado_e1, "Subindo!");
             while(posicaoElevador1 <= referencia){
                 int dado = posicaoElevador1;
                 int potencia;
@@ -145,7 +151,7 @@ void motorMovimento_e1(int referencia){
                 }
             }
         }else{
-            strcpy(estado_e1, "Elevador descendo");
+            strcpy(estado_e1, "Descendo!");
             while(posicaoElevador1 >= referencia + 85){
                 int dado = posicaoElevador1;
                 int potencia;
@@ -168,7 +174,7 @@ void motorMovimento_e1(int referencia){
         }
 
     sinalPWM_1 = 0;
-    strcpy(estado_e1, "Elevador parado");
+    strcpy(estado_e1, "Parado!");
     digitalWrite(DIR1_E1, 1);
     digitalWrite(DIR2_E1, 1);
 
@@ -184,7 +190,7 @@ void motorMovimento_e2(int referencia)
     pidAtualizaReferencia((double)referencia);
     if (referencia > posicaoElevador2)
     {
-        strcpy(estado_e2, "Elevador subindo");
+        strcpy(estado_e2, "Subindo!");
         while (posicaoElevador2 <= referencia)
         {
             int dado = posicaoElevador2;
@@ -212,7 +218,7 @@ void motorMovimento_e2(int referencia)
     }
     else
     {
-        strcpy(estado_e2, "Elevador descendo");
+        strcpy(estado_e2, "Descendo!");
         while (posicaoElevador2 >= referencia + 85)
         {
             int dado = posicaoElevador2;
@@ -238,7 +244,7 @@ void motorMovimento_e2(int referencia)
     }
 
     sinalPWM_2 = 0;
-    strcpy(estado_e2, "Elevador parado");
+    strcpy(estado_e2, "Parado");
     digitalWrite(DIR1_E2, 1);
     digitalWrite(DIR2_E2, 1);
 
@@ -266,14 +272,26 @@ int decodificaAndar(int i ){
 
 
 void motorControle(){
-    int i;
+
+    filaUnica(fila_1, 0);
+    filaUnica(fila_2, 0);
+    pthread_t threadBotoes, threadEncoder, threadPWM;
+
+    pinosConfigura();
+
+    pthread_create(&threadBotoes, NULL, lerBotoesThread, NULL);
+    pthread_create(&threadEncoder, NULL, lerEncoderThread, NULL);
+    pthread_create(&threadPWM, NULL, escreverPWMThread, NULL);
+
+    delay(300);
+
     while(1){
         requisicao_e1 = visualizar(fila_1);
         if(requisicao_e1 != -1 ){
             delay(10);
             int posi = decodificaAndar(requisicao_e1);
             if(posi == -1){
-                strcpy(estado_e1, "Emergência!");
+                strcpy(estado_e1, "Emergencia!");
                 digitalWrite(DIR1_E1, 1);
                 digitalWrite(DIR2_E1, 1);
                 
@@ -294,7 +312,7 @@ void motorControle(){
             int posi = decodificaAndar(requisicao_e2);
             if (posi == -1)
             {
-                strcpy(estado_e2, "Emergência!");
+                strcpy(estado_e2, "Emergencia!");
                 digitalWrite(DIR1_E1, 1);
                 digitalWrite(DIR2_E1, 1);
 

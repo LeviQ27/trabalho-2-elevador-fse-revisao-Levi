@@ -6,7 +6,9 @@
 
 extern int andar_e1[];
 extern int andar_e2[];
-extern pthread_mutex_t uartMutex;
+//extern pthread_mutex_t uartMutex;
+extern pthread_mutex_t uartMutex_e1;
+extern pthread_mutex_t uartMutex_e2;
 
 extern Fila* fila_1;
 extern Fila* fila_2;
