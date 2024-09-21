@@ -15,8 +15,8 @@ Levi Queiroz    |17/0108341
 
 ## Como Rodar?
 
-Após clonar o repositório, acesse o diretório ```/controle-elevador_e1``` ou ```/controle-elevador_e2```, controlam o elevador 1 e o elevador 2 respectivamente, acesse cada um dele, rode ```make``` para criar o executável e para rodá-lo mande ```make run```.
-
+Após clonar o repositório, acesse o diretório ```/controle-elevador_e1``` ou ```/controle-elevador_e2```, controlam o elevador 1 e o elevador 2 respectivamente, acesse cada um dele, rode ```make``` para criar o executável e para rodá-lo mande ```make run```. O projeto que está em ```controle-elevadores```
+ é um protótipo do projeto com temperatura e OLED funcionando.
 ## Dependênicas
 
 - Rpi.GPIO
