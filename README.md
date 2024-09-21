@@ -11,14 +11,11 @@ Trabalho 2 para a disciplina de **Fundamentos de Sistemas Embarcados** - FGA0109
 ## Dupla
 Integrante      |Matrícula 
 --------------  |----------
-Bruna Santos    |17/0100626
 Levi Queiroz    |17/0108341
 
 ## Como Rodar?
 
-Após clonar o repositório, acesse o diretório e comece o passo a passo para rodar o programa.
-
-
+Após clonar o repositório, acesse o diretório ```/controle-elevador_e1``` ou ```/controle-elevador_e2```, controlam o elevador 1 e o elevador 2 respectivamente, acesse cada um dele, rode ```make``` para criar o executável e para rodá-lo mande ```make run```.
 
 ## Dependênicas
 
